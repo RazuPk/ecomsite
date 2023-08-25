@@ -1,7 +1,7 @@
 @extends('admin.layouts.template')
 @section('page-title')
-Dashboard | EcomSite
+Pending Orders | EcomSite
 @endsection
 @section('content')
-    This is template
+Pending Orders
 @endsection
