@@ -34,7 +34,7 @@
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Category</label>
                             <div class="col-sm-10">
                                 <select class="form-select" id="category_id" name="category_id"
-                                    aria-label="Default select example">
+                                    aria-label="Default select example"@required(true)>
                                     <option selected>Open this select menu</option>
                                     @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>

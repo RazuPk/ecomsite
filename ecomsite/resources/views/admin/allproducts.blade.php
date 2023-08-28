@@ -7,6 +7,11 @@
         <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span> All Products</h5>
         <div class="card">
             <h5 class="card-header">Available Products Information</h5>
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead class="table-light">
@@ -16,21 +21,29 @@
                             <th>Image</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Slug</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @foreach ($products as $product)
                         <tr>
-                            <td>1</td>
-                            <td>Fan</td>
-                            <td></td>
-                            <td>100</td>
-                            <td>10</td>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->product_name }}</td>
+                            <td class="text-center">
+                                <img src="{{ asset($product->product_img) }}" alt=""@style('width:70px; height:40px')>
+                                <br>
+                                <a href="{{ route('editphoto', $product->id) }}" class="btn btn-primary">Edit Photo</a>
+                            </td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->slug }}</td>
                             <td>
-                                <a href="" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('editproduct', $product->id) }}" class="btn btn-primary">Edit</a>
                                 <a href="" class="btn btn-warning">Delete</a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
