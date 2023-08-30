@@ -1,6 +1,6 @@
 @extends('admin.layouts.template')
 @section('page-title')
-    Add SubCategory | EcomSite
+    Add Sub Category | EcomSite
 @endsection
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -12,7 +12,7 @@
                     <small class="text-muted float-end">Input Information</small>
                 </div>
                 <div class="card-body">
-                    @if($errors->any())
+                    @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -37,7 +37,7 @@
                                     aria-label="Default select example"@required(true)>
                                     <option selected>Open this select menu</option>
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

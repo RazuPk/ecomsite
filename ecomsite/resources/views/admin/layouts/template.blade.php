@@ -132,7 +132,7 @@
                 <span class="menu-header-text">Orders</span>
               </li>
               <li class="menu-item">
-                  <a href="{{ route('pendingorders') }}" class="menu-link">
+                  <a href="{{ route('pendingorder') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-cart-alt"></i>
                     <div data-i18n="Analytics">Pending Order</div>
                   </a>

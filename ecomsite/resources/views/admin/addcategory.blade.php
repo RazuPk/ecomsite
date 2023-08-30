@@ -26,7 +26,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Category Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Category Name" />
+                                <input type="text" class="form-control" name="category_name" id="category_name"
+                                    placeholder="Category Name" />
                             </div>
                         </div>
 

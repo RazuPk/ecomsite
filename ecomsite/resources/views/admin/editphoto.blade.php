@@ -11,12 +11,13 @@
                     <h5 class="mb-0">Update Product Image</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('storeproduct') }}" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Previous Image</label>
                             <div class="col-sm-10">
-                                <img class="img img-rounded" src="{{ asset($productinfo->product_img) }}" alt=""@style('width:80%')>
+                                <img class="img img-rounded" src="{{ asset($productinfo->product_img) }}"
+                                    alt=""@style('width:80%')>
                             </div>
                         </div>
                         <div class="row mb-3">

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function Index(){
-        $categories = Category::latest()->get();
+        $categories = Categories::latest()->get();
         return view('admin.allcategory', compact('categories'));
     }
 
@@ -19,41 +18,39 @@ class CategoryController extends Controller
 
     public function StoreCategory(Request $request){
         $request->validate([
-            'category_name' => 'required|unique:categories'
+            'category_name' => 'required|unique:categories',
         ]);
 
-        Category::insert([
+        Categories::insert([
             'category_name' => $request->category_name,
-            'slug' => strtolower(str_replace(' ','-', $request->category_name))
+            'slug' => strtolower(str_replace(' ','-',$request->category_name)),
         ]);
 
         return redirect()->route('allcategory')->with('message', 'Category Added Successfully!');
     }
 
     public function EditCategory($id){
-        $category_info = Category::findOrFail($id);
+        $category_info = Categories::findOrFail($id);
 
         return view('admin.editcategory', compact('category_info'));
     }
 
     public function UpdateCategory(Request $request){
         $category_id = $request->category_id;
-
-        $request -> validate([
-            'category_name' => 'required|unique:categories'
+        $request->validate([
+            'category_name' => 'required|unique:categories',
         ]);
 
-        Category::findOrFail($category_id)->update([
+        Categories::findOrFail($category_id)->update([
             'category_name' => $request->category_name,
-            'slug' => strtolower(str_replace(' ', '-', $request->category_name))
+            'slug' => strtolower(str_replace(' ','-',$request->category_name)),
         ]);
 
         return redirect()->route('allcategory')->with('message', 'Category Updated Successfully!');
-
     }
 
     public function DeleteCategory($id){
-        Category::findOrFail($id)->delete();
+        Categories::findOrFail($id)->delete();
 
         return redirect()->route('allcategory')->with('message', 'Category Deleted Successfully!');
     }
