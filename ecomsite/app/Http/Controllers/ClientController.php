@@ -38,6 +38,16 @@ class ClientController extends Controller
         return view('users_template.userprofile');
     }
 
+    public function PendingOrders()
+    {
+        return view('users_template.pendingorders');
+    }
+
+    public function History()
+    {
+        return view('users_template.history');
+    }
+
     public function BestSellers()
     {
         return view('users_template.bestsellers');
