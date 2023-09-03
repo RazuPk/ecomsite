@@ -8,7 +8,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
-use App\Models\Products;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'Index')->name('Home');
+    Route::get('/', 'Index')->name('home');
 });
 
 Route::controller(ClientController::class)->group(function () {
@@ -35,15 +34,20 @@ Route::controller(ClientController::class)->group(function () {
     Route::get('/new-release', 'NewRelease')->name('newrealese');
 });
 
-Route::middleware('auth', 'role:user')->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::controller(ClientController::class)->group(function () {
-        Route::get('/add-to-cart', 'AddToCart')->name('addtocart');
+        Route::post('/add-to-cart', 'AddToCart')->name('addtocart');
+        Route::get('/view-cart', 'Index')->name('viewcart');
+        Route::get('/minus-cart-item/{id}', 'MinusCartItem')->name('minuscartitem');
+        Route::get('/plus-cart-item/{id}', 'PlusCartItem')->name('pluscartitem');
+        Route::get('/remove-cart-item/{id}', 'RemoveCartItem')->name('removecartitem');
         Route::get('/checkout', 'Checkout')->name('checkout');
         Route::get('/user-profile', 'UserProfile')->name('userprofile');
         Route::get('/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
         Route::get('/user-profile/history', 'History')->name('history');
         Route::get('/todays-deals', 'TodaysDeals')->name('todaysdeals');
         Route::get('/customer-service', 'CustomerService')->name('customerservice');
+        Route::get('/user-logout', 'UserLogout')->name('userlogout');
     });
 
 });
@@ -52,7 +56,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth', 'role:admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'Index')->name('admindashboard');

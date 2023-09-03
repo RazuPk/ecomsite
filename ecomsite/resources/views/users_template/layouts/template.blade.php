@@ -1,5 +1,8 @@
 @php
+    $user = Illuminate\Support\Facades\Auth::user();
+    $user_id = Illuminate\Support\Facades\Auth::id();
     $categories = App\Models\Categories::latest()->get();
+    $cartItems = App\Models\Carts::where('user_id', $user_id)->count();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +89,8 @@
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                         <a href="/">Home</a>
                         @foreach ($categories as $category)
-                            <a href="{{ route('category',[$category->id,$category->slug])}}">{{ $category->category_name }}</a>
+                            <a
+                                href="{{ route('category', [$category->id, $category->slug]) }}">{{ $category->category_name }}</a>
                         @endforeach
                     </div>
                     <span class="toggle_icon" onclick="openNav()"><img
@@ -97,7 +101,8 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @foreach ($categories as $category)
-                                <a class="dropdown-item" href="{{ route('category',[$category->id,$category->slug])}}">{{ $category->category_name }}</a>
+                                <a class="dropdown-item"
+                                    href="{{ route('category', [$category->id, $category->slug]) }}">{{ $category->category_name }}</a>
                             @endforeach
                         </div>
                     </div>
@@ -131,13 +136,23 @@
                         </div>
                         <div class="login_menu">
                             <ul>
-                                <li><a href="#">
+                                <li>
+                                    <a href="{{ route('viewcart') }}">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        <span class="padding_10">Cart</span></a>
+                                        <span class="padding_10">
+                                            @if ($cartItems > 0)
+                                                {{ $cartItems }}
+                                            @else
+                                                0
+                                            @endif
+                                        </span>
+                                    </a>
                                 </li>
-                                <li><a href="#">
+                                <li>
+                                    <a href="{{ route('userprofile') }}">
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        <span class="padding_10">Cart</span></a>
+                                        <span class="padding_10">{{ $user->name ?? '' }} </span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -147,17 +162,55 @@
         </div>
         <!-- header section end -->
         <!-- banner section start -->
-        @yield('banner')
+        <div class="banner_section layout_padding">
+            <div class="container">
+                <div id="my_slider" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
+                                    <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
+                                    <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
+                                    <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
         <!-- banner section end -->
     </div>
     <!-- banner bg main end -->
-    <div class="container py-5"style="margin-top:200px;">
+    <div class="container py-5">
         @yield('main-content')
     </div>
     <!-- footer section start -->
     <div class="footer_section layout_padding">
         <div class="container">
-            <div class="footer_logo"><a href="index.html"><b style="font-size: 27px;color: white;">EcomSite</b></a></div>
+            <div class="footer_logo"><a href="index.html"><b style="font-size: 27px;color: white;">EcomSite</b></a>
+            </div>
             <div class="input_bt">
                 <input type="text" class="mail_bt" placeholder="Your Email" name="Your Email">
                 <span class="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
