@@ -2,7 +2,7 @@
 @section('page-title')
     User Profile | EcomSite
 @endsection
-@section('main-content')
+@section('banner-slider')
     <div class="container">
         <div class="row">
             <div class="col-lg-4">

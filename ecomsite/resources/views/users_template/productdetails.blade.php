@@ -2,7 +2,7 @@
 @section('page-title')
     Product Details | EcomSite
 @endsection
-@section('main-content')
+@section('banner-slider')
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-4">

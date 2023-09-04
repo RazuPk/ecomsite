@@ -1,8 +1,8 @@
-@extends('users_template.layouts.user_profile_template')
+@extends('users_template.layouts.template')
 @section('page-title')
     Add To Cart | EcomSite
 @endsection
-@section('main-content')
+@section('banner-slider')
     <div class="container">
         <div class="row">
             <div class="col-12">
