@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carts;
 use App\Models\Categories;
 use App\Models\Products;
+use App\Models\ShippingInfo;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,29 @@ class ClientController extends Controller
 
     public function Checkout()
     {
-        return view('users_template.checkout');
+        $user_id = Auth::id();
+        $cart_items = Carts::where('user_id', $user_id)->get();
+        return view('users_template.checkout', compact('cart_items'));
+    }
+
+    public function StoreShippingInfo(Request $request)
+    {
+        $user_id = Auth::id();
+        $request->validate([
+            'mobile_no' => 'required',
+            'road_no' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+        ]);
+        ShippingInfo::insert([
+            'user_id' => $user_id,
+            'mobile_no' => $request->mobile_no,
+            'road_no' => $request->road_no,
+            'city' => $request->city,
+            'district' => $request->district,
+        ]);
+
+        return redirect()->route('pendingorders')->with('message', 'Congratulations!Your Order Placed Successfully!!!');
     }
 
     public function UserProfile()

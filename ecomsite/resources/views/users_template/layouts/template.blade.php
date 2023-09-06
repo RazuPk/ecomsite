@@ -207,11 +207,14 @@
     <script src="{{ asset('users/js/jquery.min.js') }}"></script>
     <script src="{{ asset('users/js/popper.min.js') }}"></script>
     <script src="{{ asset('users/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('users/js/jquery-3.0.0.min.js') }}"></script>
+    <script src="{{ asset('users/js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('users/js/plugin.js') }}"></script>
     <!-- sidebar -->
     <script src="{{ asset('users/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('users/js/custom.js') }}"></script>
+    <script src="{{ asset('users/js/owl.carousel.js') }}"></script>
+    <script src="{{ asset('users/js/owl.carousel.min.js') }}"></script>
+    @yield('script')
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

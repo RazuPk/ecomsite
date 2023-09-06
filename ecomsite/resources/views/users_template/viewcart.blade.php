@@ -65,7 +65,7 @@
                                 <td colspan="3" class="text-left"><b>Total:</b></td>
                                 <td><b>{{ number_format($total, 2) }}</b></td>
                                 <td>
-                                    <a href="" class="btn btn-success">Checkout <i class="fa fa-arrow-right"></i></a>
+                                    <a href="{{ route('checkout') }}" class="btn btn-success">Checkout <i class="fa fa-arrow-right"></i></a>
                                 </td>
                             </tr>
                         </tfoot>

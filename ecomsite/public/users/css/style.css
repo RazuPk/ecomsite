@@ -543,7 +543,18 @@ a:hover {
 #my_slider .carousel-control-prev:hover {
     color: #fff;
 }
-
+.owl-nav{
+    text-align: center !important;
+}
+.owl-button-prev,
+.owl-button-next{
+    width: 55px;
+    height: 50px;
+    background: black;
+    line-height: 50px !important;
+    color: white;
+    margin: 10px;
+}
 
 /* banner section end */
 
