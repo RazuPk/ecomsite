@@ -11,7 +11,7 @@ class ShippingInfo extends Model
     protected $fillable = [
         'user_id',
         'mobile_no',
-        'road_no',
+        'shipping_address',
         'city',
         'district',
     ];

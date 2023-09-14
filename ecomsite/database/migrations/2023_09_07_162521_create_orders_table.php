@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shipping_infos', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
             $table->integer('mobile_no');
             $table->string('shipping_address');
             $table->string('city');
             $table->string('district');
+            $table->integer('item_qty');
+            $table->integer('total_amt');
+            $table->tinyInteger('status')->default('1');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_infos');
+        Schema::dropIfExists('orders');
     }
 };

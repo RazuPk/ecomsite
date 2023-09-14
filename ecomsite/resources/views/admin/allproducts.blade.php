@@ -35,7 +35,7 @@
                                     <br>
                                     <a href="{{ route('editphoto', $product->id) }}" class="btn btn-primary">Edit Photo</a>
                                 </td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ number_format($product->price,2) }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->slug }}</td>
                                 <td>

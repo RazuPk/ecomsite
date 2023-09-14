@@ -38,11 +38,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::controller(ClientController::class)->group(function () {
         Route::post('/add-to-cart', 'AddToCart')->name('addtocart');
         Route::get('/view-cart', 'Index')->name('viewcart');
-        Route::get('/minus-cart-item/{id}', 'MinusCartItem')->name('minuscartitem');
-        Route::get('/plus-cart-item/{id}', 'PlusCartItem')->name('pluscartitem');
+        Route::get('/decrement-cart-item/{id}', 'DecrementCartItem')->name('decrementcartitem');
+        Route::get('/increment-cart-item/{id}', 'IncrementCartItem')->name('incrementcartitem');
         Route::get('/remove-cart-item/{id}', 'RemoveCartItem')->name('removecartitem');
-        Route::get('/checkout', 'Checkout')->name('checkout');
+        Route::get('/shipping-info', 'ShippingInfo')->name('shippinginfo');
         Route::post('/store-shipping-info', 'StoreShippingInfo')->name('storeshippinginfo');
+        Route::get('/checkout', 'Checkout')->name('checkout');
+        Route::get('/place-order', 'PlaceOrder')->name('placeorder');
         Route::get('/user-profile', 'UserProfile')->name('userprofile');
         Route::get('/user-profile/pending-orders', 'PendingOrders')->name('pendingorders');
         Route::get('/user-profile/history', 'History')->name('history');
@@ -94,6 +96,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(OrderController::class)->group(function () {
         Route::get('/admin/pending-order', 'Index')->name('pendingorder');
+        Route::get('/admin/update-order-status/{id}', 'UpdateOrderStatus')->name('updateorderstatus');
+        Route::get('/admin/cancel-order-status/{id}', 'CancelOrderStatus')->name('cancelorderstatus');
+        Route::get('/admin/pending-order-status/{id}', 'PendingOrderStatus')->name('pendingorderstatus');
+        Route::get('/admin/complete-order', 'CompleteOrder')->name('completeorder');
+        Route::get('/admin/cancel-order', 'CancelOrder')->name('cancelorder');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
