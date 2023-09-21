@@ -33,13 +33,16 @@
                                 <td>{{ $category->product_count }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>
-                                    <a href="{{ route('editcategory', $category->id) }}" class="btn btn-primary">Edit</a>
-                                    <a href="{{ route('deletecategory', $category->id) }}" class="btn btn-warning">Delete</a>
+                                    <a href="{{ route('editcategory', $category->id) }}" class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
+                                    <a href="{{ route('deletecategory', $category->id) }}" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex mt-2 p-3">
+                    {!! $categories->links() !!}
+                </div>
             </div>
         </div>
     </div>

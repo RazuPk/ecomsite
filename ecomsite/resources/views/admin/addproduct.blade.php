@@ -24,45 +24,44 @@
                     <form action="{{ route('storeproduct') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
+                            <label class="col-sm-2 col-form-label" for="product_name">Product Name</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="product_name" id="product_name"
                                     placeholder="Product Name" />
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Price</label>
+                            <label class="col-sm-2 col-form-label" for="price">Product Price</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="price" id="price"
                                     placeholder="100" />
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Quantity</label>
+                            <label class="col-sm-2 col-form-label" for="quantity">Product Quantity</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="quantity" id="quantity"
                                     placeholder="10" />
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Short Description</label>
+                            <label class="col-sm-2 col-form-label" for="product_short_des">Short Description</label>
                             <div class="col-sm-10">
                                 <textarea rows="1" class="form-control" name="product_short_des" id="product_short_des"
                                     placeholder="Product short description..."></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Long Description</label>
+                            <label class="col-sm-2 col-form-label" for="product_long_des">Long Description</label>
                             <div class="col-sm-10">
                                 <textarea rows="2" class="form-control" name="product_long_des" id="product_long_des"
                                     placeholder="Product long description..."></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Category</label>
+                            <label class="col-sm-2 col-form-label" for="category_id">Category</label>
                             <div class="col-sm-10">
-                                <select class="form-select" id="category_id" name="category_id"
-                                    aria-label="Default select example">
+                                <select class="form-select" id="category_id" name="category_id">
                                     <option selected>Open this select menu</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -71,19 +70,15 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Sub Category</label>
+                            <label class="col-sm-2 col-form-label" for="subcategory_id">Sub Category</label>
                             <div class="col-sm-10">
-                                <select class="form-select" id="subcategory_id" name="subcategory_id"
-                                    aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    @foreach ($subcategories as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->subcategory_name }}</option>
-                                    @endforeach
+                                <select class="form-select" id="subcategory_id" name="subcategory_id">
+
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Image</label>
+                            <label class="col-sm-2 col-form-label" for="product_img">Product Image</label>
                             <div class="col-sm-10">
                                 <input class="form-control" type="file" id="product_img" name="product_img" />
                             </div>
@@ -99,4 +94,28 @@
             </div>
         </div>
     </div>
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#category_id').on('change', function() {
+                let id = $('#category_id').val();
+                if (id) {
+                    var url = "{{ route('fetchsubcategory', ':id') }}";
+                    url = url.replace(':id', id);
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            var choose ='<option selected>Open this select menu</option>';
+                            $('#subcategory_id').html(choose+data);
+                        }
+                    })
+                } else {
+                    $('#subcategory_id').html('<option selected>Open this select menu</option>');
+                }
+            })
+        })
+    </script>
+@endsection
 @endsection

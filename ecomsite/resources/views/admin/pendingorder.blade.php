@@ -32,12 +32,7 @@
                         @endphp
                         <tr>
                             <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn text-decoration-underline" data-bs-toggle="modal"
-                                    data-bs-target="#largeModal{{ $orders->id }}"
-                                    title="View Details">{{ $orders->id }}</button>
-                                @include('admin.layouts.modalTop')
-
+                                {{ $orders->id }}
                             </td>
                             <td>{{ $user_name }}</td>
                             <td>{{ $orders->mobile_no }}</td>
@@ -45,14 +40,19 @@
                             <td>{{ number_format($orders->total_amt, 2) }}</td>
                             <td>{{ $orders->status == 1 ? 'Pending' : 'Approved' }}</td>
                             <td>
-                                <a href="{{ route('updateorderstatus', $orders->id) }}" class="btn btn-primary">Approve</a>
-                                <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-warning">Cancel</a>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#largeModal{{ $orders->id }}"
+                                    title="View Details"><i class='bx bx-show'></i></button>
+                                @include('admin.layouts.modalTop')
+                                <a href="{{ route('updateorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Approved"><i class='bx bxs-check-square'></i></a>
+                                <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-danger btn-sm"title="Cancel"><i class='bx bxs-trash'></i></a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div class="d-flex mt-3 p-2">
+            <div class="d-flex mt-3 p-3">
                 {!! $orders_info->links() !!}
             </div>
         </div>

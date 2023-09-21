@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function Index(){
-        $orders_info = Orders::where('status', 1)->latest()->paginate(3);
+        $orders_info = Orders::where('status', 1)->latest()->paginate(10);
         return view('admin.pendingorder', compact('orders_info'));
     }
 
@@ -33,7 +33,7 @@ class OrderController extends Controller
 
     public function CompleteOrder()
     {
-        $orders_info = Orders::where('status', 0)->latest()->paginate(3);
+        $orders_info = Orders::where('status', 0)->latest()->paginate(10);
         return view('admin.completeorder', compact('orders_info'));
     }
 
@@ -48,7 +48,7 @@ class OrderController extends Controller
 
     public function CancelOrder()
     {
-        $orders_info = Orders::where('status', 2)->latest()->paginate(3);
+        $orders_info = Orders::where('status', 2)->latest()->paginate(10);
         return view('admin.cancelorder', compact('orders_info'));
     }
 

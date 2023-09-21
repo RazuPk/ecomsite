@@ -13,7 +13,7 @@
                 </div>
             @endif
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead class="table-light">
                         <tr>
                             <th>Id</th>
@@ -33,19 +33,22 @@
                                 <td class="text-center">
                                     <img src="{{ asset($product->product_img) }}" alt=""@style('width:70px; height:40px')>
                                     <br>
-                                    <a href="{{ route('editphoto', $product->id) }}" class="btn btn-primary">Edit Photo</a>
+                                    <a href="{{ route('editphoto', $product->id) }}" class="btn btn-dark py-0 px-2 m-1">Edit Photo</a>
                                 </td>
                                 <td>{{ number_format($product->price,2) }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>{{ $product->slug }}</td>
                                 <td>
-                                    <a href="{{ route('editproduct', $product->id) }}" class="btn btn-primary">Edit</a>
-                                    <a href="{{ route('deleteproduct', $product->id) }}" class="btn btn-warning">Delete</a>
+                                    <a href="{{ route('editproduct', $product->id) }}" class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
+                                    <a href="{{ route('deleteproduct', $product->id) }}" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex mt-3 p-3">
+                    {!! $products->links() !!}
+                </div>
             </div>
         </div>
     </div>

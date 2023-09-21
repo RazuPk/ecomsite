@@ -4,9 +4,9 @@
 @endsection
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span> All Pending Orders</h5>
+        <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span> All Complete Orders</h5>
         <div class="card">
-            <h5 class="card-header">Pending Orders Information</h5>
+            <h5 class="card-header">Complete Orders Information</h5>
             @if (session()->has('message'))
                 <div class="alert alert-success">
                     {{ session()->get('message') }}
@@ -16,7 +16,7 @@
                 <table class="table table-bordered">
                     <thead class="table-light">
                         <tr>
-                            <th>Order Id</th>
+                            <th>Id</th>
                             <th>Customer Name</th>
                             <th>Contact Number</th>
                             <th>Items</th>
@@ -33,12 +33,7 @@
                             @endphp
                             <tr>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn text-decoration-underline" data-bs-toggle="modal"
-                                        data-bs-target="#largeModal{{ $orders->id }}"
-                                        title="View Details">{{ $orders->id }}</button>
-                                    @include('admin.layouts.modalTop')
-
+                                    {{ $orders->id }}
                                 </td>
                                 <td>{{ $user_name }}</td>
                                 <td>{{ $orders->mobile_no }}</td>
@@ -46,7 +41,12 @@
                                 <td>{{ number_format($orders->total_amt, 2) }}</td>
                                 <td>{{ $orders->status == 1 ? 'Pending' : 'Approved' }}</td>
                                 <td>
-                                    <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-warning">Cancel</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#largeModal{{ $orders->id }}"
+                                        title="View Details"><i class='bx bx-show'></i></button>
+                                        @include('admin.layouts.modalTop')
+                                    <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-danger btn-sm"title="Cancel"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach

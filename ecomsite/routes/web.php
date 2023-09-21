@@ -56,13 +56,14 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'Index')->name('admindashboard');
+        Route::get('/admin/admin-logout', 'AdminLogOut')->name('adminlogout');
     });
 
     Route::controller(CategoryController::class)->group(function () {
@@ -90,6 +91,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/edit-photo/{id}', 'EditPhoto')->name('editphoto');
         Route::post('/admin/update-photo', 'UpdatePhoto')->name('updatephoto');
         Route::get('/admin/edit-product/{id}', 'EditProduct')->name('editproduct');
+        Route::get('/admin/fetch-subcategory/{id}', 'FetchSubCategory')->name('fetchsubcategory');
         Route::get('/admin/delete-product/{id}', 'DeleteProduct')->name('deleteproduct');
         Route::post('/admin/update-product', 'UpdateProduct')->name('updateproduct');
     });

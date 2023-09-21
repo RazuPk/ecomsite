@@ -9,17 +9,29 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function Index(){
-        $products = Products::latest()->get();
+    public function Index()
+    {
+        $products = Products::latest()->paginate(9);
         return view('admin.allproducts', compact('products'));
     }
-    public function AddProduct(){
+    public function AddProduct()
+    {
         $categories = Categories::latest()->get();
         $subcategories = SubCategories::latest()->get();
-        return view('admin.addproduct', compact('categories','subcategories'));
+        return view('admin.addproduct', compact('categories', 'subcategories'));
     }
 
-    public function StoreProduct(Request $request){
+    public function FetchSubCategory($id)
+    {
+        $items = SubCategories::where('category_id', $id)->get();
+        foreach ($items as $item) {
+            $output[] = '<option value="' . $item->id . '">' . $item->subcategory_name . '</option>';
+        }
+        return response()->json($output);
+    }
+
+    public function StoreProduct(Request $request)
+    {
         $request->validate([
             'product_name' => 'required|unique:products',
             'price' => 'required',
@@ -32,9 +44,9 @@ class ProductController extends Controller
         ]);
 
         $image = $request->file('product_img');
-        $image_name = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        $request->product_img->move(public_path('upload'),$image_name);
-        $image_url = 'upload/'.$image_name;
+        $image_name = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $request->product_img->move(public_path('upload'), $image_name);
+        $image_url = 'upload/' . $image_name;
 
         $category_id = $request->category_id;
         $subcategory_id = $request->subcategory_id;
@@ -52,16 +64,17 @@ class ProductController extends Controller
             'subcategory_id' => $request->subcategory_id,
             'subcategory_name' => $subcategory_name,
             'product_img' => $image_url,
-            'slug' => strtolower(str_replace(' ','-', $request->product_name)),
+            'slug' => strtolower(str_replace(' ', '-', $request->product_name)),
         ]);
 
-        Categories::where('id', $category_id)->increment('product_count',1);
-        SubCategories::where('id', $subcategory_id)->increment('product_count',1);
+        Categories::where('id', $category_id)->increment('product_count', 1);
+        SubCategories::where('id', $subcategory_id)->increment('product_count', 1);
 
         return redirect()->route('allproducts')->with('message', 'Products Added Successfully!');
     }
 
-    public function EditPhoto($id){
+    public function EditPhoto($id)
+    {
         $productinfo = Products::findOrFail($id);
 
         return view('admin.editphoto', compact('productinfo'));
@@ -85,13 +98,15 @@ class ProductController extends Controller
         return redirect()->route('allproducts')->with('message', 'Product Image Updated Successfully!');
     }
 
-    public function EditProduct($id){
+    public function EditProduct($id)
+    {
         $productinfo = Products::findOrFail($id);
 
         return view('admin.editproduct', compact('productinfo'));
     }
 
-    public function UpdateProduct(Request $request){
+    public function UpdateProduct(Request $request)
+    {
         $product_id = $request->product_id;
         $request->validate([
             'product_name' => 'required|unique:products',
@@ -107,20 +122,21 @@ class ProductController extends Controller
             'product_long_des' => $request->product_long_des,
             'price' => $request->price,
             'quantity' => $request->quantity,
-            'slug' => strtolower(str_replace(' ','-', $request->product_name)),
+            'slug' => strtolower(str_replace(' ', '-', $request->product_name)),
         ]);
 
         return redirect()->route('allproducts')->with('message', 'Products Updated Successfully!');
     }
 
-    public function DeleteProduct($id){
+    public function DeleteProduct($id)
+    {
         $category_id = Products::where('id', $id)->value('category_id');
         $subcategory_id = Products::where('id', $id)->value('subcategory_id');
 
         Products::findOrFail($id)->delete();
 
-        Categories::where('id', $category_id)->decrement('product_count',1);
-        SubCategories::where('id', $subcategory_id)->decrement('product_count',1);
+        Categories::where('id', $category_id)->decrement('product_count', 1);
+        SubCategories::where('id', $subcategory_id)->decrement('product_count', 1);
 
         return redirect()->route('allproducts')->with('message', 'Product Deleted Successfully!');
     }

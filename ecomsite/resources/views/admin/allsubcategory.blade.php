@@ -32,14 +32,17 @@
                                 <td>{{ $subcategory->slug }}</td>
                                 <td>
                                     <a href="{{ route('editsubcategory', $subcategory->id) }}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
                                     <a href="{{ route('deletesubcategory', $subcategory->id) }}"
-                                        class="btn btn-warning">Delete</a>
+                                        class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex mt-2 p-3">
+                    {!! $subcategories->links() !!}
+                </div>
             </div>
         </div>
     </div>

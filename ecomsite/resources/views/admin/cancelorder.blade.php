@@ -33,12 +33,7 @@
                             @endphp
                             <tr>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn text-decoration-underline" data-bs-toggle="modal"
-                                        data-bs-target="#largeModal{{ $orders->id }}"
-                                        title="View Details">{{ $orders->id }}</button>
-                                    @include('admin.layouts.modalTop')
-
+                                    {{ $orders->id }}
                                 </td>
                                 <td>{{ $user_name }}</td>
                                 <td>{{ $orders->mobile_no }}</td>
@@ -46,14 +41,19 @@
                                 <td>{{ number_format($orders->total_amt, 2) }}</td>
                                 <td>{{ $orders->status == 2 ? 'Cancelled' : 'Pending' }}</td>
                                 <td>
-                                    <a href="{{ route('pendingorderstatus', $orders->id) }}" class="btn btn-primary">Pendings</a>
-                                    <a href="" class="btn btn-warning">Delete</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#largeModal{{ $orders->id }}"
+                                        title="View Details"><i class='bx bx-show'></i></button>
+                                        @include('admin.layouts.modalTop')
+                                    <a href="{{ route('pendingorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Pendings"><i class='bx bx-reset'></i></a>
+                                    <a href="" class="btn btn-danger btn-sm"title="Delete"><i class='bx bxs-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="d-flex mt-3 p-2">
+                <div class="d-flex mt-3 p-3">
                     {!! $orders_info->links() !!}
                 </div>
             </div>
