@@ -9,10 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function Index(){
+    public function Index()
+    {
         $admin = Auth::user()->name;
         $userphoto = Auth::user()->userphoto;
         return view('admin.dashboard', compact('admin', 'userphoto'));
+    }
+
+    public function AdminProfile()
+    {
+        $user = Auth::user();
+        return view('admin.adminprofile', compact('user'));
     }
 
     public function AdminLogOut()

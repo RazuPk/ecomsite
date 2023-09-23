@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('admin.adminprofile', [
             'user' => $request->user(),
         ]);
     }
@@ -31,10 +31,18 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        $image = $request->file('userphoto');
+        $image_name = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $request->userphoto->move(public_path('upload'), $image_name);
+        $image_url = 'upload/' . $image_name;
 
-        $request->user()->save();
+        $request->user()->update([
+            'userphoto' => $image_url,
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('adminprofile')->with('message', 'Profile Updated Successfully!');
     }
 
     /**

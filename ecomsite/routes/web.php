@@ -63,6 +63,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'Index')->name('admindashboard');
+        Route::get('/admin/admin-profile', 'AdminProfile')->name('adminprofile');
         Route::get('/admin/admin-logout', 'AdminLogOut')->name('adminlogout');
     });
 
