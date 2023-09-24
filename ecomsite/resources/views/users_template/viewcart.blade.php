@@ -55,7 +55,7 @@
                                         </td>
                                         <td>{{ number_format($tprice, 2) }}</td>
                                         <td>
-                                            <a href="{{ route('removecartitem', $item->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('removecartitem', $item->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure to delete ?')"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     @php

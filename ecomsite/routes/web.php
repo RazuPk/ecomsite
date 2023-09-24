@@ -100,10 +100,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(OrderController::class)->group(function () {
         Route::get('/admin/pending-order', 'Index')->name('pendingorder');
         Route::get('/admin/update-order-status/{id}', 'UpdateOrderStatus')->name('updateorderstatus');
+        Route::get('/admin/cancel-complete-order/{id}', 'CancelCompleteOrder')->name('cancelcompleteorder');
         Route::get('/admin/cancel-order-status/{id}', 'CancelOrderStatus')->name('cancelorderstatus');
         Route::get('/admin/pending-order-status/{id}', 'PendingOrderStatus')->name('pendingorderstatus');
         Route::get('/admin/complete-order', 'CompleteOrder')->name('completeorder');
         Route::get('/admin/cancel-order', 'CancelOrder')->name('cancelorder');
+        Route::get('/admin/delete-order/{id}', 'DeleteOrder')->name('deleteorder');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

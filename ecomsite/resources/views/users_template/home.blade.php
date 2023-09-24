@@ -57,21 +57,28 @@
                                                  </div>
                                                  <div class="box-header">
                                                      <h4 class="shirt_text">{{ $product->product_name }}</h4>
-                                                     <p class="price_text">Start Price <span style="color: #262626;">$ {{ $product->price }}</span></p>
+                                                     <p class="price_text">Start Price <span style="color: #262626;">$
+                                                             {{ $product->price }}</span></p>
                                                  </div>
                                                  <p class="lead">
-                                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, distinctio rem ad aut reprehenderit.
+                                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+                                                     distinctio rem ad aut reprehenderit.
                                                  </p>
                                                  <div class="btn_main">
                                                      <div class="buy_bt">
                                                          <form action="{{ route('addtocart') }}" method="POST">
                                                              @csrf
-                                                             <input type="hidden" value="{{ $product->id }}" name="product_id">
-                                                             <input type="hidden" name="quantity" min="1" value="1">
-                                                             <input class="btn bg-transparent text-warning" type="submit" value="Buy Now">
+                                                             <input type="hidden" value="{{ $product->id }}"
+                                                                 name="product_id">
+                                                             <input type="hidden" name="quantity" min="1"
+                                                                 value="1">
+                                                             <input class="btn bg-transparent text-warning" type="submit"
+                                                                 value="Buy Now">
                                                          </form>
                                                      </div>
-                                                     <div class="seemore_bt"><a  href="{{ route('productdetails', [$product->id, $product->slug]) }}">See More</a></div>
+                                                     <div class="seemore_bt"><a
+                                                             href="{{ route('productdetails', [$product->id, $product->slug]) }}">See
+                                                             More</a></div>
                                                  </div>
                                              </div>
                                          </div>

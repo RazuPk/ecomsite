@@ -16,7 +16,7 @@
                                     your profile.
                                 </p>
 
-                                <a href="{{ route('adminlogout') }}" class="btn btn-sm btn-outline-danger">Logout</a>
+                                <a href="{{ route('adminprofile') }}" class="btn btn-sm btn-outline-primary">View Profile</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">

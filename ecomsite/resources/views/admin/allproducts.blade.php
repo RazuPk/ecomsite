@@ -40,7 +40,7 @@
                                 <td>{{ $product->slug }}</td>
                                 <td>
                                     <a href="{{ route('editproduct', $product->id) }}" class="btn btn-primary btn-sm"><i class='bx bx-edit'></i></a>
-                                    <a href="{{ route('deleteproduct', $product->id) }}" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i></a>
+                                    <a href="{{ route('deleteproduct', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete ?')"><i class='bx bx-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach

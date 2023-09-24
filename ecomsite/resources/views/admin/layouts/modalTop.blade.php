@@ -7,13 +7,25 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col mb-3">
+                    <div class="col-8 mb-3">
                         <label for="nameLarge" class="form-label">
                             <b>{{ $user_name }},</b><br>
                             Address:
                             <b>{{ $orders->shipping_address . ', ' . $orders->city . ', ' . $orders->district }}</b>
                             <br>
                             Phone No: <b>{{ $orders->mobile_no }}</b>
+                        </label>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label for="nameLarge" class="form-label">
+                            @php
+                                $cdate = date('d-m-Y',strtotime($orders->created_at));
+                            @endphp
+                             Date: <b>{{ $cdate }},</b><br>
+                            Order Id:
+                            <b>{{ $orders->id }}</b>
+                            <br>
+                            Status: <b>{{ (($orders->status=='1') ? 'Pending':(($orders->status=='2') ? 'Cancel' : 'Approved' )) }}</b>
                         </label>
                     </div>
                 </div>

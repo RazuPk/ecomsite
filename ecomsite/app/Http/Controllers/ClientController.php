@@ -125,6 +125,7 @@ class ClientController extends Controller
         }
         $shipping_info = ShippingInfo::where('user_id', $user_id)->first();
 
+        $created_at = date("Y-m-d H:i:s");
         $order_id = Orders::insertGetId([
             'user_id' => $user_id,
             'mobile_no' => $shipping_info->mobile_no,
@@ -133,6 +134,7 @@ class ClientController extends Controller
             'district' => $shipping_info->district,
             'item_qty' => $item_count,
             'total_amt' => $total_amt,
+            'created_at' => $created_at,
         ]);
 
         ShippingInfo::where('user_id', $user_id)->first()->delete();
@@ -144,6 +146,7 @@ class ClientController extends Controller
                 'product_id' => $items->product_id,
                 'price' => $items->price,
                 'quantity' => $items->quantity,
+                'created_at' => $created_at,
             ]);
             $id = $items->id;
             Carts::findOrFail($id)->delete();

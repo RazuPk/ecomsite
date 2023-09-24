@@ -30,7 +30,11 @@
                                     </th>
                                     <th colspan="2" class="align-top">
                                         <p class="mt-0">
+                                            @php
+                                                $cdate = date('d-m-Y', strtotime($orders->created_at));
+                                            @endphp
                                             Order ID: {{ $orders->id }} <br>
+                                            Date: {{ $cdate }}
                                             Status:{{ ($orders->status == 1) ? 'Pending' : 'Approved' }}
                                         </p>
                                     </th>

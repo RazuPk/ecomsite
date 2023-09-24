@@ -15,13 +15,13 @@
             <div class="table-responsive text-nowrap">
                 <table class="table table-bordered">
                     <thead class="table-light">
-                        <tr>
-                            <th>Order Id</th>
+                        <tr class="text-center">
+                            <th>Date</th>
                             <th>Customer Name</th>
                             <th>Contact Number</th>
                             <th>Items</th>
                             <th>Amount</th>
-                            <th>Status</th>
+                            <th>Modified</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,16 +30,18 @@
                             @php
                                 $user_id = $orders->user_id;
                                 $user_name = App\Models\User::where('id', $user_id)->value('name');
+                                $cdate = date('d-m-Y', strtotime($orders->created_at));
+                                $mdate = date('d-m-Y', strtotime($orders->updated_at));
                             @endphp
                             <tr>
                                 <td>
-                                    {{ $orders->id }}
+                                    {{ $cdate }}
                                 </td>
                                 <td>{{ $user_name }}</td>
                                 <td>{{ $orders->mobile_no }}</td>
                                 <td>{{ $orders->item_qty }}</td>
                                 <td>{{ number_format($orders->total_amt, 2) }}</td>
-                                <td>{{ $orders->status == 2 ? 'Cancelled' : 'Pending' }}</td>
+                                <td>{{ $mdate }}</td>
                                 <td>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -47,7 +49,7 @@
                                         title="View Details"><i class='bx bx-show'></i></button>
                                         @include('admin.layouts.modalTop')
                                     <a href="{{ route('pendingorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Pendings"><i class='bx bx-reset'></i></a>
-                                    <a href="" class="btn btn-danger btn-sm"title="Delete"><i class='bx bxs-trash'></i></a>
+                                    <a href="{{ route('deleteorder', $orders->id) }}" class="btn btn-danger btn-sm"title="Delete" onclick="return confirm('Are you sure to delete ?')"><i class='bx bxs-trash'></i></a>
                                 </td>
                             </tr>
                         @endforeach

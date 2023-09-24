@@ -14,8 +14,8 @@
             @endif
             <table class="table table-bordered">
                 <thead class="table-light">
-                    <tr>
-                        <th>Order Id</th>
+                    <tr class="text-center">
+                        <th>Date</th>
                         <th>Customer Name</th>
                         <th>Contact Number</th>
                         <th>Items</th>
@@ -29,10 +29,11 @@
                         @php
                             $user_id = $orders->user_id;
                             $user_name = App\Models\User::where('id', $user_id)->value('name');
+                            $cdate = date('d-m-Y', strtotime($orders->created_at));
                         @endphp
                         <tr>
                             <td>
-                                {{ $orders->id }}
+                                {{ $cdate }}
                             </td>
                             <td>{{ $user_name }}</td>
                             <td>{{ $orders->mobile_no }}</td>
@@ -45,8 +46,8 @@
                                     data-bs-target="#largeModal{{ $orders->id }}"
                                     title="View Details"><i class='bx bx-show'></i></button>
                                 @include('admin.layouts.modalTop')
-                                <a href="{{ route('updateorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Approved"><i class='bx bxs-check-square'></i></a>
-                                <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-danger btn-sm"title="Cancel"><i class='bx bxs-trash'></i></a>
+                                <a href="{{ route('updateorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Approved" onclick="return confirm('Are you verified this Order ?')"><i class='bx bxs-check-square'></i></a>
+                                <a href="{{ route('cancelorderstatus', $orders->id) }}" class="btn btn-danger btn-sm"title="Cancel" onclick="return confirm('Are you sure to cancel this Order ?')"><i class='bx bxs-x-square'></i></a>
                             </td>
                         </tr>
                     @endforeach
