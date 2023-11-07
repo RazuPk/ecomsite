@@ -36,7 +36,7 @@
                                             @endphp
                                             Order ID: {{ $orders->id }} <br>
                                             Date: {{ $cdate }}
-                                            Status:{{ (($orders->status == '1') ? 'Pending' :(($orders->status == '2') ? 'Cancel': 'Approved')) }}
+                                            Status:{{ (($orders->status == '1') ? 'Pending' :(($orders->status == '2  ') ? 'Cancel': 'Approved')) }}
                                         </p>
                                     </th>
                                 </tr>

@@ -2,56 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Http\Requests\CategoriesRequest;
+use App\Http\Services\CategoriesHelpers;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function Index(){
-        $categories = Categories::latest()->paginate(10);
-        return view('admin.allcategory', compact('categories'));
+        return (new CategoriesHelpers())->getAllCategories();
     }
 
     public function AddCategory(){
-        return view('admin.addcategory');
+        return (new CategoriesHelpers)->AddCategory();
     }
 
-    public function StoreCategory(Request $request){
-        $request->validate([
-            'category_name' => 'required|unique:categories',
-        ]);
-
-        Categories::insert([
-            'category_name' => $request->category_name,
-            'slug' => strtolower(str_replace(' ','-',$request->category_name)),
-        ]);
-
-        return redirect()->route('allcategory')->with('message', 'Category Added Successfully!');
+    public function StoreCategory(CategoriesRequest $request)
+    {
+        return (new CategoriesHelpers)->storeCategory($request);
     }
 
     public function EditCategory($id){
-        $category_info = Categories::findOrFail($id);
-
-        return view('admin.editcategory', compact('category_info'));
+        return (new CategoriesHelpers)->editCategory($id);
     }
 
-    public function UpdateCategory(Request $request){
-        $category_id = $request->category_id;
-        $request->validate([
-            'category_name' => 'required|unique:categories',
-        ]);
-
-        Categories::findOrFail($category_id)->update([
-            'category_name' => $request->category_name,
-            'slug' => strtolower(str_replace(' ','-',$request->category_name)),
-        ]);
-
-        return redirect()->route('allcategory')->with('message', 'Category Updated Successfully!');
+    public function UpdateCategory(CategoriesRequest $request)
+    {
+        return (new CategoriesHelpers)->updateCategory($request, $request->category_id);
     }
 
     public function DeleteCategory($id){
-        Categories::findOrFail($id)->delete();
-
-        return redirect()->route('allcategory')->with('message', 'Category Deleted Successfully!');
+        return (new CategoriesHelpers)->destroyCategory($id);
     }
 }
