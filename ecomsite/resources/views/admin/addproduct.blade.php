@@ -61,7 +61,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="category_id">Category</label>
                             <div class="col-sm-10">
-                                <select class="form-select" id="category_id" name="category_id">
+                                <select class="form-select" id="category_id" name="category_id"
+                                    onchange="fetchSubCategory(this.value)">
                                     <option selected>Open this select menu</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -96,26 +97,24 @@
     </div>
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('#category_id').on('change', function() {
-                let id = $('#category_id').val();
-                if (id) {
-                    var url = "{{ route('fetchsubcategory', ':id') }}";
-                    url = url.replace(':id', id);
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            var choose ='<option selected>Open this select menu</option>';
-                            $('#subcategory_id').html(choose+data);
-                        }
-                    })
-                } else {
-                    $('#subcategory_id').html('<option selected>Open this select menu</option>');
-                }
-            })
-        })
+        function fetchSubCategory(obj) {
+            let id = obj;
+            if (id) {
+                var url = "{{ route('fetchsubcategory', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var choose = '<option selected>Open this select menu</option>';
+                        $('#subcategory_id').html(choose + data);
+                    }
+                })
+            } else {
+                $('#subcategory_id').html('<option selected>Open this select menu</option>');
+            }
+        }
     </script>
 @endsection
 @endsection

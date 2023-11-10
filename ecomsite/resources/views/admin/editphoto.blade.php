@@ -11,6 +11,15 @@
                     <h5 class="mb-0">Update Product Image</h5>
                 </div>
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('updatephoto') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $productinfo->id }}">

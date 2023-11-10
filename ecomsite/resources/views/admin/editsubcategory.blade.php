@@ -23,7 +23,7 @@
                     @endif
                     <form action="{{ route('updatesubcat') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="subcatid" value="{{ $subcate_info->id }}">
+                        <input type="hidden" name="category_id" value="{{ $subcate_info->id }}">
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">Sub Category Name</label>
                             <div class="col-sm-10">
