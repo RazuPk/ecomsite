@@ -44,9 +44,7 @@
                                 <td>{{ $mdate }}</td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#largeModal{{ $orders->id }}"
-                                        title="View Details"><i class='bx bx-show'></i></button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"data-bs-target="#largeModal{{ $orders->id }}"title="View Details"><i class='bx bx-show'></i></button>
                                         @include('admin.layouts.modalTop')
                                     <a href="{{ route('pendingorderstatus', $orders->id) }}" class="btn btn-success btn-sm"title="Pendings"><i class='bx bx-reset'></i></a>
                                     <a href="{{ route('deleteorder', $orders->id) }}" class="btn btn-danger btn-sm"title="Delete" onclick="return confirm('Are you sure to delete ?')"><i class='bx bxs-trash'></i></a>
