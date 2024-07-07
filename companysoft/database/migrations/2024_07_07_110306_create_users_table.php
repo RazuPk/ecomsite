@@ -17,9 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('gender')->nullable();
-            $table->string('dob')->nullable();
             $table->string('phone')->nullable();
+            $table->string('gender')->nullable();
             $table->string('usertype')->default('user');
             $table->string('token')->nullable();
             $table->timestamp('token_expire')->nullable();

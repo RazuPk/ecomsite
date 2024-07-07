@@ -1,9 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Login')
-
+@section('title','Login')
 @section('content')
 <div class="container-fluid">
-    <div class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-lg-4">
             <div class="card shadow">
                 <div class="card-header">
@@ -13,12 +12,12 @@
                     <form action="#" method="post" id="login_form">
                         @csrf
                         <div class="mb-3">
-                            <input type="text" name="email" id="email" class="form-control rounded-0" placeholder="E-mail">
+                            <input type="email" name="email" id="email" class="form-control rounded-0" placeholder="E-mail">
                             <div class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <input type="password" name="password" id="password" class="form-control rounded-0" placeholder="password">
+                            <input type="password" name="password" id="password" class="form-control rounded-0" placeholder="Password">
                             <div class="invalid-feedback"></div>
                         </div>
 
@@ -39,7 +38,5 @@
     </div>
 </div>
 @endsection
-
 @section('script')
-
 @endsection
