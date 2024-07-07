@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -17,6 +19,7 @@ class UserController extends Controller
     public function register()
     {
         return view('auth.register');
+
     }
 
     public function forgot()
@@ -52,11 +55,86 @@ class UserController extends Controller
             $user->userid = $request->userid;
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->password = $request->password;
+            $user->password = Hash::make($request->password);
             $user->save();
             return response()->json([
                 'status' => 200,
                 'message' => 'Registration Successfull!'
+            ]);
+        }
+    }
+
+    //user login method
+    public function loginUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|max:100',
+            'password' => 'required|max:6'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->getMessageBag()
+            ]);
+        } else {
+            $user = User::where('email', $request->email)->first();
+            if ($user) {
+                if (Hash::check($request->password, $user->password)) {
+                    $request->session()->put('loggedInUser', $user->id);
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'success',
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => 401,
+                        'message' => 'User or Password incorrect!'
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => 401,
+                    'message' => 'User not found!'
+                ]);
+            }
+        }
+    }
+
+    //User profile page
+    public function profile(Request $request)
+    {
+        $userInfo =  User::where('id', $request->session()->get('loggedInUser'))->first();
+        return view('profile', compact('userInfo'));
+    }
+
+    //user logout method
+    public function logout(Request $request)
+    {
+        if ($request->session()->has('loggedInUser')) {
+            $request->session()->pull('loggedInUser');
+            return redirect('/');
+        }
+    }
+
+    //update user profile image ajax request
+    public function profileImageUpdate(Request $request)
+    {
+        $user_id = $request->user_id;
+        $user = User::find($user_id);
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storageAs('public/images/', $fileName);
+
+            if ($user->picture) {
+                Storage::delete('public/images/' . $user->picture);
+            }
+            User::where('id', $user_id)->update([
+                'picture' => $fileName
+            ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Profile image updated Successfully!'
             ]);
         }
     }

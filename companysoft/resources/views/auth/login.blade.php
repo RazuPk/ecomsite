@@ -9,6 +9,7 @@
                     <h2 class="fw-bold text-secondary text-center">Login</h2>
                 </div>
                 <div class="card-body p-5">
+                    <div id="login_alert"></div>
                     <form action="#" method="post" id="login_form">
                         @csrf
                         <div class="mb-3">
@@ -39,4 +40,30 @@
 </div>
 @endsection
 @section('script')
+<script>
+    $(function(){
+        $("#login_form").submit(function(e){
+            e.preventDefault();
+            $("#login_btn").html('Please Wait...');
+            $.ajax({
+                url: '{{ route('auth.login') }}',
+                method: 'post',
+                data: $(this).serialize(),
+                dataType:'json',
+                success:function(res){
+                    if(res.status == 400){
+                        showError('email', res.message.email);
+                        showError('password', res.message.password);
+                        $("#login_btn").val('Login');
+                    }else if(res.status == 401){
+                        $("#login_alert").html(showMessage('danger', res.message));
+                        $("#login_btn").val('Login');
+                    }else if(res.status == 200 && res.message == 'success'){
+                        location.href = '{{ route('profile') }}';
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection
