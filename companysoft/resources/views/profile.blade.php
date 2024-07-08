@@ -12,7 +12,7 @@
                 <div class="card-body p-5">
                     <div class="row">
                         <div class="col-lg-4 px-5 text-center" style="border-right:1px solid #999;">
-                            <img src="{{ asset('img/profileimg.jpg') }}" id="image_preview" class="img-fluid rounded-circle img-thumnail" width="200">
+                            <img src="{{ $userInfo->picture ? $userInfo->picture : asset('img/profileimg.jpg') }}" id="image_preview" class="img-fluid rounded-circle img-thumnail" width="200">
                             <div>
                                 <label for="picture">Change Profile Picture</label>
                                 <input type="file" name="picture" id="picture" class="form-control rounded-pill">

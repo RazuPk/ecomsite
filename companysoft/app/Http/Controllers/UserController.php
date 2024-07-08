@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -121,20 +122,24 @@ class UserController extends Controller
     {
         $user_id = $request->user_id;
         $user = User::find($user_id);
-        if ($request->hasFile('picture')) {
-            $file = $request->file('picture');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storageAs('public/images/', $fileName);
 
-            if ($user->picture) {
-                Storage::delete('public/images/' . $user->picture);
+        if ($request->picture) {
+            $image_path = public_path($user->picture);
+            if (File::exists($image_path)) {
+                File::delete($image_path);
             }
-            User::where('id', $user_id)->update([
-                'picture' => $fileName
-            ]);
+            $file = $request->picture;
+            $fileName = time() . '.' . $file->extension();
+            $file->move(public_path('images'), $fileName);
+            $user->picture = 'images/' . $fileName;
+            $user->update();
             return response()->json([
                 'status' => 200,
-                'message' => 'Profile image updated Successfully!'
+                'message' => 'Profile picture uploaded success!'
+            ]);
+        } else {
+            return response()->json(['status' => 400,
+                'message' => 'Picture not found!'
             ]);
         }
     }
