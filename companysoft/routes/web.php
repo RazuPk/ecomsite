@@ -17,5 +17,6 @@ Route::middleware([LoginCheck::class])->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::get('/logout', 'logout')->name('auth.logout');
         Route::post('/profile-image', 'profileImageUpdate')->name('profile.image');
+        Route::post('/profile-update', 'profileUpdate')->name('profile.update');
     });
 });

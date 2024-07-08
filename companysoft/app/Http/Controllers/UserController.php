@@ -143,4 +143,36 @@ class UserController extends Controller
             ]);
         }
     }
+
+    //profile update ajax method
+    public function profileUpdate(Request $request)
+    {
+        if ($request->id) {
+            $user_id = $request->id;
+            $user = User::find($user_id);
+            if ($user) {
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->gender = $request->gender;
+                $user->dob = $request->dob;
+                $user->usertype = $request->usertype;
+                $user->phone = $request->phone;
+                $user->update();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Profile updated success!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'User not found!'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Operation failed!'
+            ]);
+        }
+    }
 }

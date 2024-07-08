@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('phone')->nullable();
             $table->string('gender')->nullable();
+            $table->date('dob')->nullable();
             $table->string('usertype')->default('4');
             $table->string('token')->nullable();
             $table->timestamp('token_expire')->nullable();

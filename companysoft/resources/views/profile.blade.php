@@ -10,6 +10,7 @@
                     <a href="{{ route('auth.logout') }}" class="btn btn-dark">Logout</a>
                 </div>
                 <div class="card-body p-5">
+                    <div id="profile_alert"></div>
                     <div class="row">
                         <div class="col-lg-4 px-5 text-center" style="border-right:1px solid #999;">
                             <img src="{{ $userInfo->picture ? $userInfo->picture : asset('img/profileimg.jpg') }}" id="image_preview" class="img-fluid rounded-circle img-thumnail" width="200">
@@ -96,7 +97,35 @@
                 contentType:false,
                 dataType:'json',
                 success:function(response){
-                    console.log(response);
+                    if(response.status == 200){
+                        $("#profile_alert").html(showMessage('success', response.message));
+                        $("#picture").val('');
+                    }
+                }
+            });
+        });
+
+
+        $("#profile_form").submit(function(e){
+            e.preventDefault();
+            $("#profile_btn").val('Updating...');
+            let id = $("#user_id").val();
+            $.ajax({
+                url:'{{ route('profile.update') }}',
+                method:'post',
+                data: $(this).serialize() + '&id=' + id,
+                dataType:'json',
+                success:function(res){
+                    if(res.status == 400){
+                        $("#profile_alert").html(showMessage('danger', res.message));
+                        $("#profile_btn").val('Update Profile');
+                    }else if(res.status == 401){
+                        $("#profile_alert").html(showMessage('danger', res.message));
+                        $("#profile_btn").val('Update Profile');
+                    }else if(res.status == 200){
+                        $("#profile_alert").html(showMessage('success', res.message));
+                        $("#profile_btn").val('Update Profile');
+                    }
                 }
             });
         });
