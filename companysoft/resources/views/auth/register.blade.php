@@ -13,7 +13,7 @@
                     <form action="#" method="post" id="register_form">
                         @csrf
                         <div class="mb-3">
-                            <input type="text" name="userid" id="userid" class="form-control rounded-0" placeholder="Employee Id">
+                            <input type="text" name="empid" id="empid" class="form-control rounded-0" placeholder="Employee Id">
                             <div class="invalid-feedback"></div>
                         </div>
 
@@ -62,7 +62,7 @@
             dataType:'json',
             success:function(res){
                 if(res.status == 400){
-                    showError('userid', res.message.userid);
+                    showError('empid', res.message.empid);
                     showError('name', res.message.name);
                     showError('email', res.message.email);
                     showError('password', res.message.password);

@@ -37,7 +37,7 @@ class UserController extends Controller
     public function registerUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'userid' => 'required|unique:users|max:10',
+            'empid' => 'required|unique:users|max:10',
             'name' => 'required|max:100',
             'email' => 'required|email|unique:users|max:100',
             'password' => 'required|max:50',
@@ -53,7 +53,7 @@ class UserController extends Controller
             ]);
         } else {
             $user = new User();
-            $user->userid = $request->userid;
+            $user->empid = $request->empid;
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
@@ -143,6 +143,55 @@ class UserController extends Controller
             ]);
         }
     }
+
+    //Employee Id update ajax method
+
+    public function empIdCheck(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'empid' => 'required|unique:users|max:10'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->getMessageBag()
+            ]);
+        } else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'success!'
+            ]);
+        }
+    }
+    public function empIdUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'empid' => 'required|unique:users|max:10'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->getMessageBag()
+            ]);
+        } else {
+            $id = $request->id;
+            $user = User::find($id);
+            if ($user) {
+                $user->empid = $request->empid;
+                $user->update();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Employee Id Updated success!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 401,
+                    'message' => 'User not found!'
+                ]);
+            }
+        }
+    }
+
 
     //profile update ajax method
     public function profileUpdate(Request $request)
